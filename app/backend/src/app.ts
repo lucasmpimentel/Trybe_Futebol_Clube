@@ -1,18 +1,21 @@
 import * as express from 'express';
+import * as cors from 'cors';
+import 'express-async-errors';
 import routes from './routes';
+import error from './middlewares/error.middleware';
 
 class App {
   public app: express.Express;
 
   constructor() {
     this.app = express();
-
+    this.app.use(cors())
     this.config();
-
-    this.app.use(routes);
-
+    
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.app.use(routes);
+    this.app.use(error);
   }
 
   private config():void {
