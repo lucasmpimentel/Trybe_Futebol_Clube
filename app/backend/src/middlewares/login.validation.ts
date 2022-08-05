@@ -13,6 +13,22 @@ const loginValidation = (req: Request, _res: Response, next: NextFunction) => {
   const { email, password } = req.body;
   const { error } = loginSchema.validate({ email, password });
 
+  if (error) throw new CustomError(400, 'All fields must be filled');
+
+  next();
+};
+
+const tokenSchema = Joi.object(
+  {
+    token: Joi.string().required(),
+  }
+);
+
+const tokenValidation = (req: Request, _res: Response, next: NextFunction) => {
+  const { authorization } = req.headers;
+  if (!authorization) throw new CustomError(401, 'Token not found');
+
+  const { error } = tokenSchema.validate({ token: authorization });
   if (error) throw new CustomError(400, error.message);
 
   next();
@@ -20,4 +36,5 @@ const loginValidation = (req: Request, _res: Response, next: NextFunction) => {
 
 export default {
   loginValidation,
+  tokenValidation,
 }

@@ -17,14 +17,14 @@ const jwtConfig: IJwtConfig = {
   algorithm: 'HS256',
 };
 
-const create = (id: number, email: string, username: string): string => 
+const create = (id: number, username: string, email: string): string => 
   jwt.sign(
     { data: { id, username, email } },
     secret,
     jwtConfig as jwt.SignOptions,
   );
 
-const verify = async (token: string) => 
+const verify = (token: string) => 
   jwt.verify(token, secret) as { data: IUserToken };
 
 export default {

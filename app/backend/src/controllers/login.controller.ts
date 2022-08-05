@@ -8,6 +8,13 @@ const login = async (req: Request, res: Response) => {
   res.status(200).json({ token });
 };
 
+const auth = async (req: Request, res: Response) => {
+  const { authorization } = req.headers as { authorization: string };
+  const role = await service.auth(authorization);
+  res.status(200).json({ role });
+};
+
 export default {
-  login
+  login,
+  auth,
 }
