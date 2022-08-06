@@ -2,7 +2,7 @@ import CustomError from '../utils/CustomError';
 import Matches from '../database/models/matches';
 import Match from '../utils/match.class';
 import teamsServices from './teams.services';
-import { IMatch } from '../interfaces/matches.interfaces';
+import { IMatch, INewMatch } from '../interfaces/matches.interfaces';
 
 const getAll = async (query: string) => {
   const matches: IMatch[] = await Matches.findAll() as any;
@@ -26,13 +26,33 @@ const getAll = async (query: string) => {
   
   if (query !== '') {
     const filtered = result.filter((match) => String(match.inProgress) === query);
-    console.log({filtered});
     return filtered;
   }
 
   return result;
-}
+};
+
+const create = async (body: INewMatch) => {
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = body;
+  const { id } = await Matches.create({
+    homeTeam,
+    awayTeam,
+    homeTeamGoals,
+    awayTeamGoals,
+    inProgress: 1,
+  });
+
+  const result = { id, homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true }
+  return result;
+};
+
+const editStatus = async (id: number) => {
+  const response = await Matches.update({ inProgress: Number(0) }, { where: { id } });
+  console.log(response)
+};
 
 export default {
   getAll,
+  create,
+  editStatus,
 };

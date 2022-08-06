@@ -20,6 +20,10 @@ routes.route('/teams/:id')
   .get(teamsController.getById);
 
 routes.route('/matches')
-  .get(matchController.getAll);
+  .get(matchController.getAll)
+  .post(login.tokenValidation, matchController.create);
+
+routes.route('/matches/:id/finish')
+  .patch(login.tokenValidation, matchController.editStatus)
 
 export default routes;

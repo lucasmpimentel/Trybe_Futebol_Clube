@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { stringify } from 'querystring';
+import { INewMatch } from '../interfaces/matches.interfaces';
 import service from '../services/matches.services';
 
 const getAll = async (req: Request, res: Response) => {
@@ -12,6 +12,20 @@ const getAll = async (req: Request, res: Response) => {
   res.status(200).json(matches);
 };
 
+const create = async (req: Request, res: Response) => {
+  const body = req.body as INewMatch;
+  const result = await service.create(body);
+  res.status(201).json(result);
+};
+
+const editStatus = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await service.editStatus(Number(id));
+  res.status(200).json(result)
+}
+
 export default {
   getAll,
+  create,
+  editStatus,
 };

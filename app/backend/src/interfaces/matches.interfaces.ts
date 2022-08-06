@@ -8,3 +8,10 @@ export interface IMatch {
   teamHome?: string;
   teamAway?: string;
 } 
+
+export interface INewMatch {
+  homeTeam: number;
+  awayTeam: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+}

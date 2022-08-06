@@ -9,6 +9,7 @@ Matches.init({
   id: {
     type: INTEGER,
     primaryKey: true,
+    autoIncrement: true,
   },
   homeTeam: {
     type: INTEGER,
