@@ -1,5 +1,6 @@
 import * as express from 'express';
 import login from './middlewares/login.validation';
+import match from './middlewares/matches.validation'
 
 import loginController from './controllers/login.controller';
 import teamsController from './controllers/teams.controller';
@@ -21,7 +22,7 @@ routes.route('/teams/:id')
 
 routes.route('/matches')
   .get(matchController.getAll)
-  .post(login.tokenValidation, matchController.create);
+  .post(login.verifyRole, match.newMatchValidation, matchController.create);
 
 routes.route('/matches/:id/finish')
   .patch(login.tokenValidation, matchController.editStatus)

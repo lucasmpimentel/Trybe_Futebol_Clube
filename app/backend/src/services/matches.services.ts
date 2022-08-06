@@ -34,6 +34,7 @@ const getAll = async (query: string) => {
 
 const create = async (body: INewMatch) => {
   const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = body;
+
   const { id } = await Matches.create({
     homeTeam,
     awayTeam,
