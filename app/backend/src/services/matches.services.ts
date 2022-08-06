@@ -47,8 +47,10 @@ const create = async (body: INewMatch) => {
 };
 
 const editStatus = async (id: number) => {
-  const response = await Matches.update({ inProgress: Number(0) }, { where: { id } });
-  console.log(response)
+  const [ editedRows ] = await Matches.update({ inProgress: Number(0) }, { where: { id } });
+  const result = Number(editedRows) === 1
+  if (result) return { "message": "Finished" };
+  throw new CustomError(409, 'Cannot change the match');
 };
 
 export default {
