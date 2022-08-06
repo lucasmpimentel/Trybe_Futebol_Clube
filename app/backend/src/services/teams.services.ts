@@ -7,6 +7,13 @@ const getAll = async () => {
   return teams;
 };
 
+const getById = async (id: number) => {
+  const team = await Teams.findByPk(id);
+  if (!team) throw new CustomError(404, 'Team not found');
+  return team;
+}
+
 export default {
   getAll,
+  getById,
 }
