@@ -5,6 +5,7 @@ import match from './middlewares/matches.validation'
 import loginController from './controllers/login.controller';
 import teamsController from './controllers/teams.controller';
 import matchController from './controllers/match.controller';
+import leadboardController from './controllers/leadboard.controller';
 
 const routes = express.Router();
 
@@ -25,9 +26,15 @@ routes.route('/matches')
   .post(login.verifyRole, match.newMatchValidation, matchController.create);
 
 routes.route('/matches/:id')
-  .patch(login.verifyRole, match.changeMatchValidation, matchController.editScore)
+  .patch(login.verifyRole, match.changeMatchValidation, matchController.editScore);
 
 routes.route('/matches/:id/finish')
-  .patch(login.tokenValidation, matchController.editStatus)
+  .patch(login.tokenValidation, matchController.editStatus);
+
+routes.route('/leaderboard/home')
+  .get(leadboardController.homeLeadboard);
+
+routes.route('/leaderboard/away')
+  .get(leadboardController.awayLeadboard);
 
 export default routes;
