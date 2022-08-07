@@ -24,6 +24,9 @@ routes.route('/matches')
   .get(matchController.getAll)
   .post(login.verifyRole, match.newMatchValidation, matchController.create);
 
+routes.route('/matches/:id')
+  .patch(login.verifyRole, match.changeMatchValidation, matchController.editScore)
+
 routes.route('/matches/:id/finish')
   .patch(login.tokenValidation, matchController.editStatus)
 

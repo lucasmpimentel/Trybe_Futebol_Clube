@@ -45,7 +45,7 @@ const verifyRole = async (req: Request, _res: Response, next: NextFunction) => {
 
   const { data } = token.verify(authorization);
   if (!data) throw new CustomError(401, 'Token must be a valid token');
-
+  console.log(data);
   const user = await loginServices.getByEmail(data.email);
   if (user.role !== 'admin') throw new CustomError(401, 'Token must be a valid token');
 

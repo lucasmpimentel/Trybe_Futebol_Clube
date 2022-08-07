@@ -31,6 +31,24 @@ const newMatchValidation = async (req: Request, _res: Response, next: NextFuncti
   next()
 }
 
+const changeMatchSchema = Joi.object({
+  homeTeamGoals: Joi.number().required(),
+  awayTeamGoals: Joi.number().required(),
+})
+
+const changeMatchValidation = (req: Request, _res: Response, next: NextFunction) => {
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  const { error } = changeMatchSchema.validate({
+    homeTeamGoals,
+    awayTeamGoals,
+  });
+
+  if(error) throw new CustomError(400, error.message);
+
+  next()
+}
+
 export default {
   newMatchValidation,
+  changeMatchValidation,
 }

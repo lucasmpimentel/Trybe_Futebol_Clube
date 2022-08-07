@@ -49,13 +49,24 @@ const create = async (body: INewMatch) => {
 
 const editStatus = async (id: number) => {
   const [ editedRows ] = await Matches.update({ inProgress: Number(0) }, { where: { id } });
-  const result = Number(editedRows) === 1
+  const result = Number(editedRows) === 1;
   if (result) return { "message": "Finished" };
   throw new CustomError(409, 'Cannot change the match');
 };
+
+const editScore = async (homeTeamGoals: number, awayTeamGoals: number, matchId: number) => {
+  const [ editedRows ] = await Matches.update(
+    { homeTeamGoals, awayTeamGoals }, 
+    { where: { id: matchId } },
+  );
+  const result = Number(editedRows) === 1;
+  if (result) return { "message": "Updated" };
+  throw new CustomError(409, 'Cannot change the match');
+}
 
 export default {
   getAll,
   create,
   editStatus,
+  editScore,
 };

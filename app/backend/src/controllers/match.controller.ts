@@ -24,10 +24,22 @@ const editStatus = async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await service.editStatus(Number(id));
   res.status(200).json(result)
-}
+};
+
+const editScore = async (req: Request, res: Response) => {
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  const { id } = req.params;
+  const result = await service.editScore(
+    Number(homeTeamGoals),
+    Number(awayTeamGoals),
+    Number(id),
+  );
+  res.status(200).json(result);
+};
 
 export default {
   getAll,
   create,
   editStatus,
+  editScore,
 };
